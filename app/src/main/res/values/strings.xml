@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">C0744277_FinalProject</string>
+    <string name="str_login">LOGIN</string>
+    <string name="str_email">Email</string>
+    <string name="str_password">Password</string>
+    <string name="str_register">Register</string>
+</resources>
