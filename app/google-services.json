@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "943941481643",
+    "firebase_url": "https://lambton-gtd-project.firebaseio.com",
+    "project_id": "lambton-gtd-project",
+    "storage_bucket": "lambton-gtd-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943941481643:android:bb2cccea45913e5f",
+        "android_client_info": {
+          "package_name": "com.giselletavares.c0744277_finalproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943941481643-hj1ddtpujjk1kodc057ed1i6r992t235.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giselletavares.c0744277_finalproject",
+            "certificate_hash": "3e1f4b44354c71cef0fc820940eb88e07dfef98c"
+          }
+        },
+        {
+          "client_id": "943941481643-kov25iadknj62rjctuu93rs9ms4gq141.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwP8cAoWb27lAqWskwrwFKZZMR7cUZGUA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943941481643-kov25iadknj62rjctuu93rs9ms4gq141.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

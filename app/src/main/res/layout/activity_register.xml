@@ -5,22 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".User.LoginActivity">
+    tools:context=".User.RegisterActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="428dp"
+        android:layout_marginBottom="452dp"
         android:fontFamily="@font/roboto"
         android:gravity="center_horizontal"
-        android:text="@string/str_login"
+        android:text="@string/str_register"
         android:textColor="#FFF"
         android:textColorLink="#FFF"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -57,16 +57,14 @@
         android:inputType="textEmailAddress"
         android:textColor="#FFF"
         android:textColorHint="#CFD8DC"
-        android:textColorLink="@color/colorAccent"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/txtPassword"
-        android:layout_width="333dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="32dp"
@@ -79,16 +77,34 @@
         android:inputType="textPassword"
         android:textColor="#FFF"
         android:textColorHint="#CFD8DC"
-        android:textColorLink="@color/colorAccent"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
+    <EditText
+        android:id="@+id/txtConfirmPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto"
+        android:foregroundGravity="center_horizontal"
+        android:hint="@string/str_confirm_password"
+        android:inputType="textPassword"
+        android:textColor="#FFF"
+        android:textColorHint="#CFD8DC"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+
     <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnRegister"
+        android:layout_width="132dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
@@ -98,31 +114,24 @@
         android:fontFamily="@font/roboto"
         android:foregroundGravity="center_horizontal"
         android:padding="12dp"
-        android:text="@string/str_login"
-        android:textColorLink="@color/colorAccent"
+        android:text="@string/str_register"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtConfirmPassword" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        android:background="@color/colorPrimary"
-        android:fontFamily="@font/roboto"
-        android:padding="12dp"
-        android:text="@string/str_register"
-        android:textColor="@color/colorPrimaryLight"
-        android:textColorLink="@color/colorAccent"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
-        tools:background="@color/colorPrimaryDark" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_action_back"
+        />
 
 </android.support.constraint.ConstraintLayout>
