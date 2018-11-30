@@ -1,17 +1,17 @@
 package com.giselletavares.c0744277_finalproject.Model;
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
-@Entity(tableName = "tasksLabels")
+@Entity(tableName = "tasksLabels", primaryKeys = {"idTask", "idLabel"})
 public class TaskLabel {
 
-    @PrimaryKey
+    @NonNull
     private String idTask;
 
-    @PrimaryKey
+    @NonNull
     private String idLabel;
 
     private Date createdDate;

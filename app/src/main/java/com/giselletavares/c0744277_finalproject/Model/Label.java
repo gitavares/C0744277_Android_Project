@@ -2,6 +2,7 @@ package com.giselletavares.c0744277_finalproject.Model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
@@ -9,20 +10,24 @@ import java.util.Date;
 public class Label {
 
     @PrimaryKey
-    private String id;
+    @NonNull
+    private String labelId;
 
+    @NonNull
     private String userId;
+
+    @NonNull
     private String labelName;
     private String labelColor;
     private Date createdDate;
     private Date modifiedDate;
 
-    public String getId() {
-        return id;
+    public String getLabelId() {
+        return labelId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setLabelId(String labelId) {
+        this.labelId = labelId;
     }
 
     public String getUserId() {

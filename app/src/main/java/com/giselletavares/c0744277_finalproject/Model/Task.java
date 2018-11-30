@@ -2,20 +2,26 @@ package com.giselletavares.c0744277_finalproject.Model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
-import java.time.Duration;
+import java.sql.Time;
 import java.util.Date;
 
 @Entity(tableName = "tasks")
 public class Task {
 
     @PrimaryKey
+    @NonNull
     private String id;
 
+    @NonNull
     private String userId;
+
+    @NonNull
     private String taskName;
+
     private Date dueDate;
-    private Duration duration;
+    private Time duration;
     private Character priority;
     private Date reminder;
     private String notes;
@@ -55,11 +61,11 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public Duration getDuration() {
+    public Time getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(Time duration) {
         this.duration = duration;
     }
 
