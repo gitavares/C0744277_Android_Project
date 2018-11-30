@@ -12,4 +12,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--temp-->
+    <string-array name="labelsTest">
+        <item>Inbox</item>
+        <item>Home</item>
+        <item>Work</item>
+        <item>Study</item>
+        <item>Vacation</item>
+        <item>Personal Project</item>
+    </string-array>
 </resources>

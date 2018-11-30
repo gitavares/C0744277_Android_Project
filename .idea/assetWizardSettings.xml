@@ -33,9 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_action_add_task" />
+                                      <entry key="outputName" value="ic_action_add_blue" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="ff9800" />
+                                      <entry key="themeColor" value="303f9f" />
                                     </map>
                                   </option>
                                 </PersistentState>
