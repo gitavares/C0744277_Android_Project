@@ -1,8 +1,15 @@
 <resources>
-    <string name="app_name">C0744277_FinalProject</string>
+    <string name="app_name"></string>
     <string name="str_login">LOGIN</string>
     <string name="str_email">Email</string>
     <string name="str_password">Password</string>
     <string name="str_confirm_password">Confirm Password</string>
     <string name="str_register">Register</string>
+    <string name="str_today">Today</string>
+    <string name="str_inbox">Inbox</string>
+    <string name="str_next_days">Next Days</string>
+    <string name="str_title_labels">Labels</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
