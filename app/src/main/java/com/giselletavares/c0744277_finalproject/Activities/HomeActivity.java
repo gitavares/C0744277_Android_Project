@@ -1,5 +1,6 @@
-package com.giselletavares.c0744277_finalproject.Home;
+package com.giselletavares.c0744277_finalproject.Activities;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
@@ -10,14 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.giselletavares.c0744277_finalproject.Adapters.PageAdapter;
+import com.giselletavares.c0744277_finalproject.Model.AppDatabase;
 import com.giselletavares.c0744277_finalproject.R;
-import com.giselletavares.c0744277_finalproject.User.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
+    public static AppDatabase sAppDatabase;
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -38,6 +41,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if(currentUser == null) {
             startActivity(new Intent(HomeActivity.this, LoginActivity.class));
         }
+
+        // DATABASE
+        sAppDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "idoitdb")
+                .allowMainThreadQueries()
+                .build();
 
         // TOOLBAR
         mToolbar = findViewById(R.id.tlbHome);
@@ -94,9 +102,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-//        int i = view.getId();
-//
-//        switch (i) {
+
+//        switch (view.getId()) {
 //            case R.id.btnLogout:
 //                // temp - the logout will be different
 //                FirebaseAuth.getInstance().signOut();
@@ -104,5 +111,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 //                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
 //                break;
 //        }
+
     }
 }

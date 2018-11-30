@@ -1,4 +1,4 @@
-package com.giselletavares.c0744277_finalproject.User;
+package com.giselletavares.c0744277_finalproject.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.giselletavares.c0744277_finalproject.Home.HomeActivity;
 import com.giselletavares.c0744277_finalproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -85,9 +84,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        int i = view.getId();
 
-        switch (i) {
+        switch (view.getId()) {
             case R.id.btnRegister:
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;

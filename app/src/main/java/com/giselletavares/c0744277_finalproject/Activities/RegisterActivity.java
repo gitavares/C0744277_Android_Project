@@ -1,4 +1,4 @@
-package com.giselletavares.c0744277_finalproject.User;
+package com.giselletavares.c0744277_finalproject.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.giselletavares.c0744277_finalproject.Home.HomeActivity;
 import com.giselletavares.c0744277_finalproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -84,9 +83,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     // back button
     @Override
     public void onClick(View view) {
-        int i = view.getId();
 
-        switch (i) {
+        switch (view.getId()) {
             case R.id.btnBack:
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
@@ -94,7 +92,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 createAccount(mEmail.getText().toString(), mPassword.getText().toString(), mConfirmPassword.getText().toString());
                 break;
         }
-
 
     }
 

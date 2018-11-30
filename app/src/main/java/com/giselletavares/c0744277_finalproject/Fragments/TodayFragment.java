@@ -1,4 +1,4 @@
-package com.giselletavares.c0744277_finalproject.Home;
+package com.giselletavares.c0744277_finalproject.Fragments;
 
 
 import android.os.Bundle;
