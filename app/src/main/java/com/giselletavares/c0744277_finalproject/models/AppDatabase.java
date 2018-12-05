@@ -1,4 +1,4 @@
-package com.giselletavares.c0744277_finalproject.Model;
+package com.giselletavares.c0744277_finalproject.models;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;

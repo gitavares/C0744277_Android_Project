@@ -9,9 +9,10 @@
     <string name="str_inbox">Inbox</string>
     <string name="str_next_days">Next Days</string>
     <string name="str_title_labels">Labels</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_add_label">Add Label</string>
+    <string name="str_label_name">Label Name</string>
+    <string name="str_select_a_color">Select a Color</string>
+    <string name="str_color_label">Color:</string>
 
     <!--temp-->
     <string-array name="labelsTest">

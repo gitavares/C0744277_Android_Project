@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -25,9 +25,9 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".Activities.RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.HomeActivity"
+        <activity android:name=".activities.HomeActivity"
             android:screenOrientation="portrait" />
     </application>
 

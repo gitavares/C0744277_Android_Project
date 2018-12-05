@@ -8,4 +8,18 @@
     <color name="colorSecondaryText">#757575</color>
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
+
+    <array name="label_colors">
+        <item name="colorRed">#e6194B</item>
+        <item name="colorOrange">#f58231</item>
+        <item name="colorYellow">#ffe119</item>
+        <item name="colorLime">#bfef45</item>
+        <item name="colorGreen">#3cb44b</item>
+        <item name="colorCyan">#42d4f4</item>
+        <item name="colorPurple">#911eb4</item>
+        <item name="colorMagenta">#f032e6</item>
+        <item name="colorGrey">#a9a9a9</item>
+        <item name="colorBlack">#000000</item>
+    </array>
+
 </resources>

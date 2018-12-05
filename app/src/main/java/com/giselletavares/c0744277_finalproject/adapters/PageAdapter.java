@@ -1,12 +1,12 @@
-package com.giselletavares.c0744277_finalproject.Adapters;
+package com.giselletavares.c0744277_finalproject.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.giselletavares.c0744277_finalproject.Fragments.InboxFragment;
-import com.giselletavares.c0744277_finalproject.Fragments.NextDaysFragment;
-import com.giselletavares.c0744277_finalproject.Fragments.TodayFragment;
+import com.giselletavares.c0744277_finalproject.fragments.InboxFragment;
+import com.giselletavares.c0744277_finalproject.fragments.NextDaysFragment;
+import com.giselletavares.c0744277_finalproject.fragments.TodayFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 

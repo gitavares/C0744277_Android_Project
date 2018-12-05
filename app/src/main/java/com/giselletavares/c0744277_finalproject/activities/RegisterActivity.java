@@ -1,4 +1,4 @@
-package com.giselletavares.c0744277_finalproject.Activities;
+package com.giselletavares.c0744277_finalproject.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -76,11 +76,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         }
 
-
     }
 
 
-    // back button
     @Override
     public void onClick(View view) {
 
