@@ -143,12 +143,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnAddTask:
-
-                // do something
+                startActivity(new Intent(HomeActivity.this, AddTaskActivity.class));
+                finish();
                 break;
 
             case R.id.btnLabel:
-
                 filterAndAddLabel();
                 break;
 

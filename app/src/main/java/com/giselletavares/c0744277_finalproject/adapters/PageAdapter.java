@@ -22,9 +22,9 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new TodayFragment();
-            case 1:
                 return new InboxFragment();
+            case 1:
+                return new TodayFragment();
             case 2:
                 return new NextDaysFragment();
             default:

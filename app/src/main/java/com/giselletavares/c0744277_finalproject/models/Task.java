@@ -4,7 +4,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import java.sql.Time;
 import java.util.Date;
 
 @Entity(tableName = "tasks")
@@ -12,7 +11,7 @@ public class Task {
 
     @PrimaryKey
     @NonNull
-    private String id;
+    private String _id;
 
     @NonNull
     private String userId;
@@ -21,7 +20,7 @@ public class Task {
     private String taskName;
 
     private Date dueDate;
-    private Time duration;
+    private Date duration;
     private Character priority;
     private Date reminder;
     private String notes;
@@ -29,12 +28,13 @@ public class Task {
     private Date createdDate;
     private Date modifiedDate;
 
-    public String getId() {
-        return id;
+    @NonNull
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(@NonNull String _id) {
+        this._id = _id;
     }
 
     public String getUserId() {
@@ -61,11 +61,11 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public Time getDuration() {
+    public Date getDuration() {
         return duration;
     }
 
-    public void setDuration(Time duration) {
+    public void setDuration(Date duration) {
         this.duration = duration;
     }
 
