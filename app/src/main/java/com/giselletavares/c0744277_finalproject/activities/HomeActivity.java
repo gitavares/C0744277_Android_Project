@@ -3,6 +3,7 @@ package com.giselletavares.c0744277_finalproject.activities;
 import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
@@ -21,13 +22,18 @@ import android.widget.Toast;
 import com.giselletavares.c0744277_finalproject.R;
 import com.giselletavares.c0744277_finalproject.adapters.PageAdapter;
 import com.giselletavares.c0744277_finalproject.models.AppDatabase;
+import com.giselletavares.c0744277_finalproject.models.Label;
+import com.giselletavares.c0744277_finalproject.utils.Formatting;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.thebluealliance.spectrum.SpectrumDialog;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, TabLayout.BaseOnTabSelectedListener {
+
+
 
     private FirebaseAuth mAuth;
     public static AppDatabase sAppDatabase;
@@ -44,8 +50,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton mBtnAddTask;
 
     private String[] labelItems;
+//    private ArrayList<Label> labelItems = new ArrayList<>();
+    Cursor cursorLabels;
+//    List<Label> labels;
     private boolean[] labelCheckedItems;
     ArrayList<Integer> mUserLabelSelected = new ArrayList<>(); // it will "save" the labels selected by the user
+
+    Formatting mFormatting = new Formatting();
+    Date currentDateTime = new Date();
 
 
     @Override
@@ -63,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // DATABASE
         sAppDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "idoitdb")
                 .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build();
 
         // TOOLBAR
@@ -89,136 +102,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
         // LOAD LABEL LIST DIALOG
-        labelItems = getResources().getStringArray(R.array.labelsTest); // for while, it's coming from string.xml
-        labelCheckedItems = new boolean[labelItems.length];
+        cursorLabels = HomeActivity.sAppDatabase.mLabelDAO().getLabels(mAuth.getCurrentUser().getUid());
+
+//        labelItems = getResources().getStringArray(R.array.labelsTest); // for while, it's coming from string.xml
+//        labelCheckedItems = new boolean[labelItems.length];
+//        labelCheckedItems = new boolean[labels.size()];
+
+        mBtnAddTask.setOnClickListener(this);
 
         mBtnLabel.setOnClickListener(this);
 
-//        mBtnLabel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(HomeActivity.this);
-//
-//                mBuilder.setIcon(getResources().getDrawable(R.drawable.ic_action_label_list))
-//                        .setTitle("Your task labels: ");
-//
-//                mBuilder.setMultiChoiceItems(labelItems, labelCheckedItems, new DialogInterface.OnMultiChoiceClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
-//
-//                        if(isChecked) {
-//                            if(!mUserLabelSelected.contains(position)) {
-//                                mUserLabelSelected.add(position);
-//                            }
-//                        } else if(mUserLabelSelected.contains(position)) {
-//                            mUserLabelSelected.remove((Integer) position); // needs to be casted or else it tries to remove at that position rather than remove that number at "some" position
-//                        }
-//                    }
-//                });
-//
-//                mBuilder.setCancelable(false);
-//                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int which) {
-//                        String labelItem = ""; // TEMP - this is to put something on the text label, but for this project, I will get this info to filter on databse
-//
-//                        for (int i = 0; i < mUserLabelSelected.size(); i++) {
-//                            // TEMP - it will be use to filter through db
-//                            labelItem += labelItems[mUserLabelSelected.get(i)];
-//
-//                            if(i != mUserLabelSelected.size() - 1) {
-//                                labelItem += ", ";
-//                            }
-//                        }
-//
-//                        Toast.makeText(HomeActivity.this, "Selected: " + labelItem, Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//
-//                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                    }
-//                });
-//
-//                mBuilder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int which) {
-//
-//                        for(int i = 0; i < labelCheckedItems.length; i++) {
-//                            labelCheckedItems[i] = false;
-//                            mUserLabelSelected.clear();
-//                        }
-//                        // set here to back the filter by label to show all tasks independent of the label
-//                        Toast.makeText(HomeActivity.this, "Selected label cleaned", Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//
-//
-//                mBuilder.setNeutralButton("Add Label", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        // go to another dialog
-//                        AlertDialog.Builder mAddLabelBuilder = new AlertDialog.Builder(HomeActivity.this);
-//                        View mAddLabelView = getLayoutInflater().inflate(R.layout.dialog_label_add, null);
-//
-//                        EditText mTxtLabelName = mAddLabelView.findViewById(R.id.txtLabelName);
-//                        final TextView mLblColorPicked = mAddLabelView.findViewById(R.id.lblColorPicked);
-//                        Button mBtnColorPicker = mAddLabelView.findViewById(R.id.btnColorPicker);
-//                        Button mBtnAddLabel = mAddLabelView.findViewById(R.id.btnAddLabel);
-//
-//                        mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                SpectrumDialog.Builder mColorBuilder = new SpectrumDialog.Builder(HomeActivity.this)
-//                                        .setColors(R.array.label_colors)
-//                                        .setSelectedColorRes(R.color.colorDivider)
-//                                        .setDismissOnColorSelected(true)
-//                                        .setOnColorSelectedListener(new SpectrumDialog.OnColorSelectedListener() {
-//                                            @Override
-//                                            public void onColorSelected(boolean positiveResult, int color) {
-//                                                if (positiveResult) {
-////                                                    mLblColorPicked.setText("#" + Integer.toHexString(color).toUpperCase());
-//                                                    mLblColorPicked.setBackgroundColor(color);
-//                                                    Toast.makeText(HomeActivity.this, "Color selected: #" + Integer.toHexString(color).toUpperCase(), Toast.LENGTH_SHORT).show();
-//                                                } else {
-//                                                    Toast.makeText(HomeActivity.this, "Dialog cancelled", Toast.LENGTH_SHORT).show();
-//                                                }
-//                                            }
-//                                        });
-//                                mColorBuilder.setTitle("Color picker");
-//                                mColorBuilder.build().show(getSupportFragmentManager(), "color");
-//                            }
-//                        });
-//
-//                        mBtnAddLabel.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                // do the validation
-//                            }
-//                        });
-//
-//                        mAddLabelBuilder.setView(mAddLabelView);
-//                        AlertDialog addLabelDialog = mAddLabelBuilder.create();
-//                        addLabelDialog.show();
-//
-//                        Toast.makeText(HomeActivity.this, "Add task button pressed", Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//                mBuilder.setNeutralButtonIcon(getResources().getDrawable(R.drawable.ic_action_add_task, getTheme()));
-//
-//                AlertDialog mDialogLabels = mBuilder.create();
-//                mDialogLabels.show();
-//            }
-//        });
-
-        mBtnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // do something
-            }
-        });
+        mBtnFilter.setOnClickListener(this);
 
     }
 
@@ -280,37 +174,75 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void filterAndAddLabel(){
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(HomeActivity.this);
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(HomeActivity.this);
 
         mBuilder.setIcon(getResources().getDrawable(R.drawable.ic_action_label_list))
-                .setTitle("Your task labels: ");
+                .setTitle("Your task labels: ")
+                .setCancelable(false);
 
-        mBuilder.setMultiChoiceItems(labelItems, labelCheckedItems, new DialogInterface.OnMultiChoiceClickListener() {
+        // list of labels to be selected
+//        mBuilder.setMultiChoiceItems(labelItems, labelCheckedItems, new DialogInterface.OnMultiChoiceClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+//
+//                if(isChecked) {
+//                    if(!mUserLabelSelected.contains(position)) {
+//                        mUserLabelSelected.add(position);
+//                    }
+//                } else if(mUserLabelSelected.contains(position)) {
+//                    mUserLabelSelected.remove((Integer) position); // needs to be casted or else it tries to remove at that position rather than remove that number at "some" position
+//                }
+//            }
+//        });
+
+        mBuilder.setMultiChoiceItems(cursorLabels, "labelChecked", "labelName", new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
 
+                Toast.makeText(HomeActivity.this, "We are in!!!!!", Toast.LENGTH_LONG).show();
                 if(isChecked) {
                     if(!mUserLabelSelected.contains(position)) {
                         mUserLabelSelected.add(position);
                     }
+                    Toast.makeText(HomeActivity.this, "OK checked", Toast.LENGTH_LONG).show();
                 } else if(mUserLabelSelected.contains(position)) {
                     mUserLabelSelected.remove((Integer) position); // needs to be casted or else it tries to remove at that position rather than remove that number at "some" position
+                    Toast.makeText(HomeActivity.this, "NOT checked", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-        mBuilder.setCancelable(false);
+
+//        mBuilder.setCancelable(false);
+
         mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 String labelItem = ""; // TEMP - this is to put something on the text label, but for this project, I will get this info to filter on databse
 
-                for (int i = 0; i < mUserLabelSelected.size(); i++) {
-                    // TEMP - it will be use to filter through db
-                    labelItem += labelItems[mUserLabelSelected.get(i)];
+//                for (int i = 0; i < mUserLabelSelected.size(); i++) {
+//                    // TEMP - it will be use to filter through db
+//                    labelItem += labelItems[mUserLabelSelected.get(i)];
+//
+//                    if(i != mUserLabelSelected.size() - 1) {
+//                        labelItem += ", ";
+//                    }
+//                }
 
-                    if(i != mUserLabelSelected.size() - 1) {
-                        labelItem += ", ";
+
+//                for (Label label : labels) {
+//                    // TEMP - it will be use to filter through db
+//                    labelItem += label.getLabelName() + " ";
+//                }
+
+                if(cursorLabels != null) {
+                    if(cursorLabels.getCount() != 0) {
+                        cursorLabels.moveToFirst();
+
+                        while(!cursorLabels.isAfterLast()){
+                            labelItem = cursorLabels.getString(cursorLabels.getColumnIndex("labelName"));
+                            cursorLabels.moveToNext();
+                        }
                     }
                 }
 
@@ -325,31 +257,37 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        mBuilder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-
-                for(int i = 0; i < labelCheckedItems.length; i++) {
-                    labelCheckedItems[i] = false;
-                    mUserLabelSelected.clear();
-                }
-                // set here to back the filter by label to show all tasks independent of the label
-                Toast.makeText(HomeActivity.this, "Selected label cleaned", Toast.LENGTH_LONG).show();
-            }
-        });
+//        mBuilder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int which) {
+//
+//                for(int i = 0; i < labelCheckedItems.length; i++) {
+//                    labelCheckedItems[i] = false;
+//                    mUserLabelSelected.clear();
+//                }
+//                // set here to back the filter by label to show all tasks independent of the label
+//                Toast.makeText(HomeActivity.this, "Selected label cleaned", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
 
         mBuilder.setNeutralButton("Add Label", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                final String[] colorPicked = {""};
+
                 // go to another dialog
                 AlertDialog.Builder mAddLabelBuilder = new AlertDialog.Builder(HomeActivity.this);
                 View mAddLabelView = getLayoutInflater().inflate(R.layout.dialog_label_add, null);
 
-                EditText mTxtLabelName = mAddLabelView.findViewById(R.id.txtLabelName);
+                final EditText mTxtLabelName = mAddLabelView.findViewById(R.id.txtLabelName);
                 final TextView mLblColorPicked = mAddLabelView.findViewById(R.id.lblColorPicked);
                 Button mBtnColorPicker = mAddLabelView.findViewById(R.id.btnColorPicker);
                 Button mBtnAddLabel = mAddLabelView.findViewById(R.id.btnAddLabel);
+
+                mAddLabelBuilder.setView(mAddLabelView);
+                final AlertDialog addLabelDialog = mAddLabelBuilder.create();
+                addLabelDialog.show();
 
                 mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -362,9 +300,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                     @Override
                                     public void onColorSelected(boolean positiveResult, int color) {
                                         if (positiveResult) {
-//                                            mLblColorPicked.setText("Color selected");
-                                            mLblColorPicked.setBackgroundColor(color);
-                                            Toast.makeText(HomeActivity.this, "Color selected: #" + Integer.toHexString(color).toUpperCase(), Toast.LENGTH_SHORT).show();
+                                            colorPicked[0] = String.valueOf(color);
+                                            mLblColorPicked.setBackgroundColor(Integer.parseInt(colorPicked[0]));
+//                                            Toast.makeText(HomeActivity.this, "Color selected: #" + Integer.toHexString(color).toUpperCase(), Toast.LENGTH_SHORT).show();
                                         } else {
                                             Toast.makeText(HomeActivity.this, "Dialog cancelled", Toast.LENGTH_SHORT).show();
                                         }
@@ -378,18 +316,44 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 mBtnAddLabel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // do the validation
+
+                        // Validation
+                        if(mTxtLabelName.getText().toString().isEmpty() || colorPicked[0] == "") {
+                            AlertDialog.Builder mAddLabelValidationBuilder = new AlertDialog.Builder(HomeActivity.this);
+
+                            mAddLabelValidationBuilder.setTitle("Error");
+                            mAddLabelValidationBuilder.setMessage("Give a label name and color");
+
+                            mAddLabelValidationBuilder.setNegativeButton("Try again", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            });
+
+                            AlertDialog mDialogLabels = mAddLabelValidationBuilder.create();
+                            mDialogLabels.show();
+                        } else {
+
+                            Label label = new Label();
+                            label.setUserId(mAuth.getCurrentUser().getUid());
+                            label.set_id(mFormatting.getDateTimeForIdFormatter(currentDateTime));
+                            label.setLabelName(mTxtLabelName.getText().toString());
+                            label.setLabelChecked(0);
+                            label.setLabelColor(colorPicked[0]);
+                            label.setCreatedDate(currentDateTime);
+                            label.setModifiedDate(currentDateTime);
+
+                            // save on database
+                            HomeActivity.sAppDatabase.mLabelDAO().addLabel(label);
+                            addLabelDialog.dismiss();
+
+                        }
                     }
                 });
-
-                mAddLabelBuilder.setView(mAddLabelView);
-                AlertDialog addLabelDialog = mAddLabelBuilder.create();
-                addLabelDialog.show();
-
-                Toast.makeText(HomeActivity.this, "Add task button pressed", Toast.LENGTH_LONG).show();
             }
         });
-        mBuilder.setNeutralButtonIcon(getResources().getDrawable(R.drawable.ic_action_add_task, getTheme()));
+//        mBuilder.setNeutralButtonIcon(getResources().getDrawable(R.drawable.ic_action_add_task, getTheme()));
 
         AlertDialog mDialogLabels = mBuilder.create();
         mDialogLabels.show();

@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 
-@Database(entities = {Task.class, Label.class, Setting.class, TaskLabel.class}, version = 1)
+@Database(entities = {Task.class, Label.class, Setting.class, TaskLabel.class}, version = 3)
 @TypeConverters({DateTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 

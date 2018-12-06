@@ -11,23 +11,27 @@ public class Label {
 
     @PrimaryKey
     @NonNull
-    private String labelId;
+    private String _id;
 
     @NonNull
     private String userId;
 
     @NonNull
     private String labelName;
+
+    private Integer labelChecked;
+
     private String labelColor;
     private Date createdDate;
     private Date modifiedDate;
 
-    public String getLabelId() {
-        return labelId;
+    @NonNull
+    public String get_id() {
+        return _id;
     }
 
-    public void setLabelId(String labelId) {
-        this.labelId = labelId;
+    public void set_id(@NonNull String _id) {
+        this._id = _id;
     }
 
     public String getUserId() {
@@ -44,6 +48,14 @@ public class Label {
 
     public void setLabelName(String labelName) {
         this.labelName = labelName;
+    }
+
+    public Integer getLabelChecked() {
+        return labelChecked;
+    }
+
+    public void setLabelChecked(Integer labelChecked) {
+        this.labelChecked = labelChecked;
     }
 
     public String getLabelColor() {
