@@ -61,55 +61,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
-    <ImageButton
-        android:id="@+id/btnLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:background="@color/colorPrimary"
-        android:contentDescription="Labels"
-        android:padding="10dp"
-        android:src="@drawable/ic_action_label"
-        app:layout_constraintBottom_toTopOf="@+id/vwPager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tlbHome" />
+    <!--<ImageButton-->
+        <!--android:id="@+id/btnAddTask"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:contentDescription="Add Task"-->
+        <!--android:padding="10dp"-->
+        <!--android:src="@drawable/ic_action_add_task"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/vwPager"-->
+        <!--app:layout_constraintEnd_toEndOf="@+id/tlbHome"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/tlbHome" />-->
 
-    <ImageButton
-        android:id="@+id/btnAddTask"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimary"
-        android:contentDescription="Add Task"
-        android:padding="10dp"
-        android:src="@drawable/ic_action_add_task"
-        app:layout_constraintBottom_toTopOf="@+id/vwPager"
-        app:layout_constraintEnd_toEndOf="@+id/tlbHome"
-        app:layout_constraintTop_toTopOf="@+id/tlbHome" />
-
-    <ImageButton
-        android:id="@+id/btnFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/colorPrimary"
-        android:contentDescription="Filter"
-        android:padding="10dp"
-        android:src="@drawable/ic_action_filter"
-        app:layout_constraintBottom_toTopOf="@+id/vwPager"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddTask"
-        app:layout_constraintTop_toTopOf="@+id/tlbHome" />
-
-    <TextView
-        android:id="@+id/lblLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/str_title_labels"
-        android:textColor="@color/colorPrimaryLight"
-        app:layout_constraintBottom_toTopOf="@+id/vwPager"
-        app:layout_constraintStart_toEndOf="@+id/btnLabel"
-        app:layout_constraintTop_toTopOf="@+id/tlbHome" />
 </android.support.constraint.ConstraintLayout>

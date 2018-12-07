@@ -20,10 +20,8 @@ import com.giselletavares.c0744277_finalproject.models.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -77,16 +75,14 @@ public class NextDaysFragment extends Fragment {
                 .fallbackToDestructiveMigration() // because i wont implement now migrations
                 .build();
 
+        Calendar fromTomorrow = Calendar.getInstance();
+//        fromTomorrow.add(Calendar.DAY_OF_YEAR, 1);
+        fromTomorrow.set(Calendar.HOUR_OF_DAY, 1); // it is because the due date saved has 00:00:00
+        fromTomorrow.set(Calendar.MINUTE, 0);
+        fromTomorrow.set(Calendar.SECOND, 0);
+        fromTomorrow.set(Calendar.MILLISECOND, 0);
 
-        Date currentDateTime = new Date();
-        Date afterTodayDate = currentDateTime;
-        try {
-            afterTodayDate = new SimpleDateFormat("dd/MM/yyyy").parse(currentDateTime.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        List<Task> tasks = NextDaysFragment.sAppDatabase.mTaskDAO().getTasksNextDays(currentUser.getUid(), false, afterTodayDate);
+        List<Task> tasks = NextDaysFragment.sAppDatabase.mTaskDAO().getTasksNextDays(currentUser.getUid(), false, fromTomorrow.getTime());
 
         mTaskList = new ArrayList<>();
 

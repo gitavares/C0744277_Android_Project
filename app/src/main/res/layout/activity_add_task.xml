@@ -97,44 +97,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtTaskName" />
 
-        <EditText
-            android:id="@+id/txtLabelsSelected"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:ems="10"
-            android:enabled="false"
-            android:fontFamily="@font/roboto"
-            android:hint="Labels selected"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:textColor="@color/colorPrimaryText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnSelectLabels"
-            app:layout_constraintTop_toBottomOf="@+id/lblLabelTitle" />
-
-        <TextView
-            android:id="@+id/lblLabelTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/roboto"
-            android:text="Labels:"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblOptionalsTitle" />
-
         <TextView
             android:id="@+id/lblDueDateTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/roboto"
             android:text="Due date:"
@@ -142,7 +110,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnSelectLabels" />
+            app:layout_constraintTop_toBottomOf="@+id/lblOptionalsTitle" />
 
         <TextView
             android:id="@+id/lblDurationTitle"
@@ -201,19 +169,6 @@
             app:layout_constraintEnd_toStartOf="@+id/swReminder"
             app:layout_constraintStart_toEndOf="@+id/btnSelectDueDate"
             app:layout_constraintTop_toBottomOf="@+id/lblDueDateTitle" />
-
-        <Button
-            android:id="@+id/btnSelectLabels"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorAccent"
-            android:fontFamily="@font/roboto"
-            android:padding="10dp"
-            android:text="Select Labels"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblLabelTitle" />
 
         <Button
             android:id="@+id/btnSelectDueDate"

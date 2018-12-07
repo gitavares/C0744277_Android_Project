@@ -8,6 +8,7 @@
     <color name="colorSecondaryText">#757575</color>
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
+    <color name="colorAttention">#e6194b</color>
 
     <array name="label_colors">
         <item name="colorRed">#e6194B</item>

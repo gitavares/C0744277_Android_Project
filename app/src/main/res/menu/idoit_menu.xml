@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mnAddTask"
+        android:icon="@drawable/ic_action_add_task"
+        android:title="Add Task"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mnHistory"
+        android:title="Tasks History" />
+    <item
+        android:id="@+id/mnSettings"
+        android:title="Settings" />
+    <item
+        android:id="@+id/mnLogout"
+        android:title="Logout" />
+</menu>

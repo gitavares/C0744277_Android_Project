@@ -43,12 +43,8 @@ public class AddTaskActivity extends AppCompatActivity {
     ImageButton btnBack;
     @BindView(R.id.txtTaskName)
     EditText txtTaskName;
-    @BindView(R.id.txtLabelsSelected)
-    EditText txtLabelsSelected;
     @BindView(R.id.lblDueDateSelected)
     TextView lblDueDateSelected;
-    @BindView(R.id.btnSelectLabels)
-    Button btnSelectLabels;
     @BindView(R.id.btnSelectDueDate)
     Button btnSelectDueDate;
     @BindView(R.id.btnSaveTask)
@@ -188,11 +184,6 @@ public class AddTaskActivity extends AppCompatActivity {
                     task.setModifiedDate(currentDateTime);
 
                     AddTaskActivity.sAppDatabase.mTaskDAO().addTask(task);
-
-                    ///////
-                    // pending
-                    // work on save labels and task
-                    ///////
 
                     Toast.makeText(this, "Task saved", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(AddTaskActivity.this, HomeActivity.class));

@@ -1,28 +1,37 @@
 package com.giselletavares.c0744277_finalproject.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.giselletavares.c0744277_finalproject.R;
 import com.giselletavares.c0744277_finalproject.models.Task;
 import com.giselletavares.c0744277_finalproject.utils.Formatting;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TasksViewHolder> {
 
     private List<Task> mTaskList;
     private Context mContext;
+    private Dialog mDialog;
+    Formatting formatting = new Formatting();
 
     public RecyclerViewAdapter(List<Task> taskList, Context context) {
-        mTaskList = taskList;
-        mContext = context;
+        this.mTaskList = taskList;
+        this.mContext = context;
     }
 
     @NonNull
@@ -31,8 +40,123 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         View mView;
         mView = LayoutInflater.from(mContext).inflate(R.layout.item_task_list, viewGroup, false);
+        final TasksViewHolder tasksViewHolder = new TasksViewHolder(mView);
 
-        TasksViewHolder tasksViewHolder = new TasksViewHolder(mView);
+        mDialog = new Dialog(mContext);
+        mDialog.setContentView(R.layout.dialog_task_detail);
+
+
+        tasksViewHolder.mLinearLayout_task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                CheckBox chkIsDone = mDialog.findViewById(R.id.chkIsDone_dialog);
+                TextView lblPriority = mDialog.findViewById(R.id.lblPriority_dialog);
+                TextView lblTask = mDialog.findViewById(R.id.lblTask_dialog);
+                TextView lblDuration = mDialog.findViewById(R.id.lblDuration_dialog);
+                TextView lblDueDate = mDialog.findViewById(R.id.lblDueDate_dialog);
+                TextView lblNotesTitle = mDialog.findViewById(R.id.lblNotesTitleField_dialog);
+                TextView lblNotes = mDialog.findViewById(R.id.lblNotes_dialog);
+                Button btnEditTask = mDialog.findViewById(R.id.btnEditTask_dialog);
+                ImageButton btnDeleteTask = mDialog.findViewById(R.id.btnDeleteTask_dialog);
+
+                if (mTaskList.get(tasksViewHolder.getAdapterPosition()).getStatus()) {
+                    chkIsDone.setChecked(true);
+                }
+
+                switch (mTaskList.get(tasksViewHolder.getAdapterPosition()).getPriority()) {
+                    case '0':
+                    case 'N':
+                        lblPriority.setText("");
+                        lblPriority.setVisibility(View.GONE);
+                        break;
+                    case '1':
+                    case 'L':
+                        lblPriority.setVisibility(View.VISIBLE);
+                        lblPriority.setText("!");
+                        lblPriority.setTextColor(Color.parseColor("#303f9f"));
+                        lblPriority.setBackgroundColor(Color.parseColor("#ffefd6"));
+                        break;
+                    case '2':
+                    case 'M':
+                        lblPriority.setVisibility(View.VISIBLE);
+                        lblPriority.setText("!!");
+                        lblPriority.setTextColor(Color.parseColor("#303f9f"));
+                        lblPriority.setBackgroundColor(Color.parseColor("#ffd494"));
+                        break;
+                    case '3':
+                    case 'H':
+                        lblPriority.setVisibility(View.VISIBLE);
+                        lblPriority.setText("!!!");
+                        lblPriority.setTextColor(Color.parseColor("#303f9f"));
+                        lblPriority.setBackgroundColor(Color.parseColor("#ff9800"));
+                        break;
+                }
+
+                lblTask.setText(mTaskList.get(tasksViewHolder.getAdapterPosition()).getTaskName());
+
+                if (mTaskList.get(tasksViewHolder.getAdapterPosition()).getDuration() != null) {
+                    lblDuration.setVisibility(View.VISIBLE);
+                    lblDuration.setText("Duration: " + formatting.getDurationFormatter(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDuration()));
+                } else {
+                    lblDuration.setText("");
+                    lblDuration.setVisibility(View.GONE);
+                }
+
+                Calendar today = Calendar.getInstance();
+                today.set(Calendar.HOUR_OF_DAY, 0);
+                today.set(Calendar.MINUTE, 0);
+                today.set(Calendar.SECOND, 0);
+                today.set(Calendar.MILLISECOND, 0);
+
+                if (mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate() != null) {
+                    lblDueDate.setVisibility(View.VISIBLE);
+                    lblDueDate.setText("Due Date: " + formatting.getDateShortFormatter(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate()));
+                    lblDueDate.setTextColor(Color.parseColor("#212121"));
+                    lblDueDate.setBackgroundColor(Color.TRANSPARENT);
+                    if(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate().compareTo(today.getTime()) < 0){
+                        lblDueDate.setTextColor(Color.RED);
+                        lblDueDate.setBackgroundColor(Color.TRANSPARENT);
+                    } else if(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate().compareTo(today.getTime()) == 0) {
+                        lblDueDate.setText("Due Date: It's Today! " + formatting.getDateShortFormatter(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate()));
+                        lblDueDate.setTextColor(Color.parseColor("#FFFFFF"));
+                        lblDueDate.setBackgroundColor(Color.parseColor("#3f51b5"));
+                    }
+                } else {
+                    lblDueDate.setText("");
+                    lblDueDate.setVisibility(View.GONE);
+                }
+
+                if(mTaskList.get(tasksViewHolder.getAdapterPosition()).getNotes() != null) {
+                    lblNotes.setVisibility(View.VISIBLE);
+                    lblNotesTitle.setVisibility(View.VISIBLE);
+                    lblNotesTitle.setText("Notes: ");
+                    lblNotes.setText(mTaskList.get(tasksViewHolder.getAdapterPosition()).getNotes());
+                } else {
+                    lblNotes.setText("");
+                    lblNotes.setVisibility(View.GONE);
+                    lblNotesTitle.setText("");
+                    lblNotesTitle.setVisibility(View.GONE);
+                }
+
+                btnEditTask.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // go to edit activity
+                    }
+                });
+
+                btnDeleteTask.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                Toast.makeText(mContext, "Test " + String.valueOf(tasksViewHolder.getAdapterPosition()), Toast.LENGTH_LONG).show();
+                mDialog.show();
+            }
+        });
 
         return tasksViewHolder;
     }
@@ -40,41 +164,62 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull TasksViewHolder tasksViewHolder, int position) {
 
-        Formatting formatting = new Formatting();
-
         Task currentTask = mTaskList.get(position);
 
-        if(currentTask.getStatus()) {
+        if (currentTask.getStatus()) {
             tasksViewHolder.mIsDone.setChecked(true);
         }
 
-        switch (currentTask.getPriority()){
+        switch (currentTask.getPriority()) {
             case '0':
+            case 'N':
                 tasksViewHolder.mLblPriority.setText("");
                 tasksViewHolder.mLblPriority.setVisibility(View.GONE);
                 break;
             case '1':
+            case 'L':
                 tasksViewHolder.mLblPriority.setText("!");
+                tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
+                tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ffefd6"));
                 break;
             case '2':
+            case 'M':
                 tasksViewHolder.mLblPriority.setText("!!");
+                tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
+                tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ffd494"));
                 break;
             case '3':
+            case 'H':
                 tasksViewHolder.mLblPriority.setText("!!!");
+                tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
+                tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ff9800"));
                 break;
         }
 
         tasksViewHolder.mLblTask.setText(currentTask.getTaskName());
 
-        if(currentTask.getDuration() != null) {
+        if (currentTask.getDuration() != null) {
             tasksViewHolder.mLblDuration.setText(formatting.getDurationFormatter(currentTask.getDuration()));
         } else {
             tasksViewHolder.mLblDuration.setText("");
             tasksViewHolder.mLblDuration.setVisibility(View.GONE);
         }
 
-        if(currentTask.getDueDate() != null) {
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+
+        if (currentTask.getDueDate() != null) {
             tasksViewHolder.mLblDueDate.setText(formatting.getDateShortFormatter(currentTask.getDueDate()));
+            if(currentTask.getDueDate().compareTo(today.getTime()) < 0){
+                tasksViewHolder.mLblDueDate.setTextColor(Color.RED);
+            } else if(currentTask.getDueDate().compareTo(today.getTime()) == 0) {
+                tasksViewHolder.mLblDueDate.setText("It's Today! " + formatting.getDateShortFormatter(currentTask.getDueDate()));
+                tasksViewHolder.mLblDueDate.setTextColor(Color.parseColor("#FFFFFF"));
+                tasksViewHolder.mLblDueDate.setBackgroundColor(Color.parseColor("#3f51b5"));
+            }
         } else {
             tasksViewHolder.mLblDueDate.setText("");
             tasksViewHolder.mLblDueDate.setVisibility(View.GONE);
@@ -89,6 +234,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class TasksViewHolder extends RecyclerView.ViewHolder {
 
+
+        private LinearLayout mLinearLayout_task;
         private CheckBox mIsDone;
         private TextView mLblPriority;
         private TextView mLblTask;
@@ -98,6 +245,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TasksViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            mLinearLayout_task = itemView.findViewById(R.id.task_item_id);
             mIsDone = itemView.findViewById(R.id.chkIsDone);
             mLblPriority = itemView.findViewById(R.id.lblPriority);
             mLblTask = itemView.findViewById(R.id.lblTask);
