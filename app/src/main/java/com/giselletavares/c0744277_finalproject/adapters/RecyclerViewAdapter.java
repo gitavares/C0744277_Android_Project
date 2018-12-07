@@ -49,17 +49,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         switch (currentTask.getPriority()){
-            case 'N':
+            case '0':
                 tasksViewHolder.mLblPriority.setText("");
                 tasksViewHolder.mLblPriority.setVisibility(View.GONE);
                 break;
-            case 'L':
+            case '1':
                 tasksViewHolder.mLblPriority.setText("!");
                 break;
-            case 'M':
+            case '2':
                 tasksViewHolder.mLblPriority.setText("!!");
                 break;
-            case 'H':
+            case '3':
                 tasksViewHolder.mLblPriority.setText("!!!");
                 break;
         }

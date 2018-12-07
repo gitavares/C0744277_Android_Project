@@ -11,6 +11,7 @@ public class Formatting {
     NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
     SimpleDateFormat dateTimeForIdFormatter = new SimpleDateFormat("yyyyMMddHHmmss");
     SimpleDateFormat dateShortFormatter = new SimpleDateFormat("dd/MM");
+    SimpleDateFormat dateMediumFormatter = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat dateDescriptiveShortFormatter = new SimpleDateFormat("MMM dd, yy");
     SimpleDateFormat dateLongFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     SimpleDateFormat durationFormatter = new SimpleDateFormat("HH:mm");
@@ -28,6 +29,10 @@ public class Formatting {
 
     public String getDateShortFormatter(Date value) {
         return dateShortFormatter.format(value);
+    }
+
+    public String getDateMediumFormatter(Date value) {
+        return dateMediumFormatter.format(value);
     }
 
     public String getDateDescriptiveShortFormatter(Date value) {

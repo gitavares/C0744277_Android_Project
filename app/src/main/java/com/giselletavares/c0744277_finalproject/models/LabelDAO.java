@@ -9,12 +9,12 @@ import android.database.Cursor;
 public interface LabelDAO {
 
     @Insert
-    public void addLabel(Label label);
+    void addLabel(Label label);
 
     @Query("SELECT _id, userId, labelName, labelChecked, labelColor " +
             "FROM labels " +
             "WHERE userId = :userId " +
             "ORDER BY labelName ASC")
-    public Cursor getLabels(String userId);
+    Cursor getLabels(String userId);
 
 }
