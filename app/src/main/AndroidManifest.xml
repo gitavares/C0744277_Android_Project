@@ -29,7 +29,8 @@
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.AddTaskActivity"
+        <activity
+            android:name=".activities.AddTaskActivity"
             android:screenOrientation="portrait" />
     </application>
 

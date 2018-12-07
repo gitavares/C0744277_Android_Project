@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TodayFragment">
+    tools:context=".fragments.TodayFragment"
+    android:paddingTop="40dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/lblToday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/roboto"
-        android:text="Today"
-        android:textSize="24sp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvTaskToday"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
-</FrameLayout>
+</LinearLayout>

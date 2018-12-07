@@ -165,16 +165,16 @@ public class AddTaskActivity extends AppCompatActivity {
                     Character priority = null;
                     switch (rbPriority.getCheckedRadioButtonId()) {
                         case R.id.rbPriorityItemNone:
-                            priority = 'N';
+                            priority = '0';
                             break;
                         case R.id.rbPriorityItemLow:
-                            priority = 'L';
+                            priority = '1';
                             break;
                         case R.id.rbPriorityItemMedium:
-                            priority = 'M';
+                            priority = '2';
                             break;
                         case R.id.rbPriorityItemHigh:
-                            priority = 'H';
+                            priority = '3';
                             break;
                     }
                     task.setPriority(priority);

@@ -1,6 +1,5 @@
 package com.giselletavares.c0744277_finalproject.utils;
 
-import java.sql.Time;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +10,7 @@ public class Formatting {
     Locale locale = new Locale("en", "CA");
     NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
     SimpleDateFormat dateTimeForIdFormatter = new SimpleDateFormat("yyyyMMddHHmmss");
-    SimpleDateFormat dateShortFormatter = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat dateShortFormatter = new SimpleDateFormat("dd/MM");
     SimpleDateFormat dateDescriptiveShortFormatter = new SimpleDateFormat("MMM dd, yy");
     SimpleDateFormat dateLongFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     SimpleDateFormat durationFormatter = new SimpleDateFormat("HH:mm");
@@ -38,7 +37,7 @@ public class Formatting {
         return dateLongFormatter.format(value);
     }
 
-    public String getDurationFormatter(Time value) {
+    public String getDurationFormatter(Date value) {
         return durationFormatter.format(value);
     } // the Timer class also
 

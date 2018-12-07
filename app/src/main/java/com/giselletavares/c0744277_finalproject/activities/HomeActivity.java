@@ -33,18 +33,17 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, TabLayout.BaseOnTabSelectedListener {
 
-
-
     private FirebaseAuth mAuth;
     public static AppDatabase sAppDatabase;
 
-    private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private PageAdapter mPageAdapter;
     private TabItem mTabItemToday;
     private TabItem mTabItemInbox;
     private TabItem mTabItemNextDays;
+
+    private Toolbar mToolbar;
     private ImageButton mBtnLabel;
     private ImageButton mBtnFilter;
     private ImageButton mBtnAddTask;
@@ -101,7 +100,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
 
-        // LOAD LABEL LIST DIALOG
+        // LOAD LABEL LIST DIALOG FROM DATABASE
         cursorLabels = HomeActivity.sAppDatabase.mLabelDAO().getLabels(mAuth.getCurrentUser().getUid());
 
 //        labelItems = getResources().getStringArray(R.array.labelsTest); // for while, it's coming from string.xml
