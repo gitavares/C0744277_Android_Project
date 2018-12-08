@@ -29,6 +29,7 @@ public class HomeActivity extends AppCompatActivity implements TabLayout.BaseOnT
     private TabItem mTabItemToday;
     private TabItem mTabItemInbox;
     private TabItem mTabItemNextDays;
+    private TabItem mTabItemHistory;
 
     private Toolbar mToolbar;
 
@@ -60,6 +61,7 @@ public class HomeActivity extends AppCompatActivity implements TabLayout.BaseOnT
         mTabItemToday = findViewById(R.id.tabItemToday);
         mTabItemInbox = findViewById(R.id.tabItemInbox);
         mTabItemNextDays = findViewById(R.id.tabItemNextDays);
+        mTabItemHistory = findViewById(R.id.tabItemHistory);
         mViewPager = findViewById(R.id.vwPager);
 
 
@@ -94,9 +96,6 @@ public class HomeActivity extends AppCompatActivity implements TabLayout.BaseOnT
             case R.id.mnAddTask:
                 startActivity(new Intent(HomeActivity.this, AddTaskActivity.class));
                 finish();
-                break;
-            case R.id.mnHistory:
-                // do something
                 break;
             case R.id.mnSettings:
                 // do something

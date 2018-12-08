@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InboxFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
     public static AppDatabase sAppDatabase;
     private FirebaseAuth mAuth;
@@ -36,7 +36,7 @@ public class InboxFragment extends Fragment {
 
     View mView;
 
-    public InboxFragment() {
+    public HistoryFragment() {
         // Required empty public constructor
     }
 
@@ -44,9 +44,9 @@ public class InboxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mView = inflater.inflate(R.layout.fragment_inbox, container, false);
+        mView = inflater.inflate(R.layout.fragment_history, container, false);
 
-        mRecyclerView = mView.findViewById(R.id.rvTaskInbox);
+        mRecyclerView = mView.findViewById(R.id.rvTaskHistory);
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mTaskList, getContext());
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -72,7 +72,7 @@ public class InboxFragment extends Fragment {
                 .fallbackToDestructiveMigration() // because i wont implement now migrations
                 .build();
 
-        List<Task> tasks = InboxFragment.sAppDatabase.mTaskDAO().getTasksInbox(currentUser.getUid(), false);
+        List<Task> tasks = HistoryFragment.sAppDatabase.mTaskDAO().getTasksDone(currentUser.getUid(), true);
 
         mTaskList = new ArrayList<>();
 
@@ -81,4 +81,5 @@ public class InboxFragment extends Fragment {
         }
 
     }
+
 }

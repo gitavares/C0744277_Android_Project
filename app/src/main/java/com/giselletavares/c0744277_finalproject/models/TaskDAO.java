@@ -41,6 +41,13 @@ public interface TaskDAO {
             "ORDER BY dueDate ASC, priority DESC")
     List<Task> getTasksNextDays(String userId, Boolean isDone, Date today);
 
+    @Query("SELECT * " +
+            "FROM tasks " +
+            "WHERE userId = :userId " +
+            "AND status = :isDone " +
+            "ORDER BY modifiedDate DESC")
+    List<Task> getTasksDone(String userId, Boolean isDone);
+
     @Update
     void updateTask(Task task);
 

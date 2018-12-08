@@ -38,6 +38,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:text="@string/str_next_days" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabItemHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/str_done" />
     </android.support.design.widget.TabLayout>
 
     <android.support.v7.widget.Toolbar

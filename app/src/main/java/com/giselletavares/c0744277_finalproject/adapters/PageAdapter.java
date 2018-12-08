@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.giselletavares.c0744277_finalproject.fragments.HistoryFragment;
 import com.giselletavares.c0744277_finalproject.fragments.InboxFragment;
 import com.giselletavares.c0744277_finalproject.fragments.NextDaysFragment;
 import com.giselletavares.c0744277_finalproject.fragments.TodayFragment;
@@ -27,6 +28,8 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return new TodayFragment();
             case 2:
                 return new NextDaysFragment();
+            case 3:
+                return new HistoryFragment();
             default:
                 return null;
         }

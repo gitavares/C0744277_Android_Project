@@ -8,9 +8,6 @@
         android:title="Add Task"
         app:showAsAction="always" />
     <item
-        android:id="@+id/mnHistory"
-        android:title="Tasks History" />
-    <item
         android:id="@+id/mnSettings"
         android:title="Settings" />
     <item
