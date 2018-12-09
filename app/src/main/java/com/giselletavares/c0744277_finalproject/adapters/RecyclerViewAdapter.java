@@ -10,14 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.giselletavares.c0744277_finalproject.R;
 import com.giselletavares.c0744277_finalproject.models.Task;
 import com.giselletavares.c0744277_finalproject.utils.Formatting;
+import com.giselletavares.c0744277_finalproject.utils.IDataOperations;
 
 import java.util.Calendar;
 import java.util.List;
@@ -28,10 +29,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext;
     private Dialog mDialog;
     Formatting formatting = new Formatting();
+    private IDataOperations mIDataOperations;
 
-    public RecyclerViewAdapter(List<Task> taskList, Context context) {
+    public RecyclerViewAdapter(IDataOperations iDataOperations, List<Task> taskList, Context context) {
         this.mTaskList = taskList;
         this.mContext = context;
+        this.mIDataOperations = iDataOperations;
     }
 
     @NonNull
@@ -45,12 +48,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mDialog = new Dialog(mContext);
         mDialog.setContentView(R.layout.dialog_task_detail);
 
-
         tasksViewHolder.mLinearLayout_task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                CheckBox chkIsDone = mDialog.findViewById(R.id.chkIsDone_dialog);
                 TextView lblPriority = mDialog.findViewById(R.id.lblPriority_dialog);
                 TextView lblTask = mDialog.findViewById(R.id.lblTask_dialog);
                 TextView lblDuration = mDialog.findViewById(R.id.lblDuration_dialog);
@@ -60,32 +61,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Button btnEditTask = mDialog.findViewById(R.id.btnEditTask_dialog);
                 ImageButton btnDeleteTask = mDialog.findViewById(R.id.btnDeleteTask_dialog);
 
-                if (mTaskList.get(tasksViewHolder.getAdapterPosition()).getStatus()) {
-                    chkIsDone.setChecked(true);
-                }
-
                 switch (mTaskList.get(tasksViewHolder.getAdapterPosition()).getPriority()) {
                     case '0':
-                    case 'N':
                         lblPriority.setText("");
                         lblPriority.setVisibility(View.GONE);
                         break;
                     case '1':
-                    case 'L':
                         lblPriority.setVisibility(View.VISIBLE);
                         lblPriority.setText("!");
                         lblPriority.setTextColor(Color.parseColor("#303f9f"));
                         lblPriority.setBackgroundColor(Color.parseColor("#ffefd6"));
                         break;
                     case '2':
-                    case 'M':
                         lblPriority.setVisibility(View.VISIBLE);
                         lblPriority.setText("!!");
                         lblPriority.setTextColor(Color.parseColor("#303f9f"));
                         lblPriority.setBackgroundColor(Color.parseColor("#ffd494"));
                         break;
                     case '3':
-                    case 'H':
                         lblPriority.setVisibility(View.VISIBLE);
                         lblPriority.setText("!!!");
                         lblPriority.setTextColor(Color.parseColor("#303f9f"));
@@ -153,7 +146,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     }
                 });
 
-                Toast.makeText(mContext, "Test " + String.valueOf(tasksViewHolder.getAdapterPosition()), Toast.LENGTH_LONG).show();
                 mDialog.show();
             }
         });
@@ -162,34 +154,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TasksViewHolder tasksViewHolder, int position) {
+    public void onBindViewHolder(@NonNull final TasksViewHolder tasksViewHolder, final int position) {
 
-        Task currentTask = mTaskList.get(position);
-
-        if (currentTask.getStatus()) {
-            tasksViewHolder.mIsDone.setChecked(true);
-        }
+        final Task currentTask = mTaskList.get(position);
 
         switch (currentTask.getPriority()) {
             case '0':
-            case 'N':
                 tasksViewHolder.mLblPriority.setText("");
                 tasksViewHolder.mLblPriority.setVisibility(View.GONE);
                 break;
             case '1':
-            case 'L':
                 tasksViewHolder.mLblPriority.setText("!");
                 tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
                 tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ffefd6"));
                 break;
             case '2':
-            case 'M':
                 tasksViewHolder.mLblPriority.setText("!!");
                 tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
                 tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ffd494"));
                 break;
             case '3':
-            case 'H':
                 tasksViewHolder.mLblPriority.setText("!!!");
                 tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
                 tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ff9800"));
@@ -225,6 +209,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tasksViewHolder.mLblDueDate.setVisibility(View.GONE);
         }
 
+        //Set it to null to erase an existing listener from a recycled view.
+        tasksViewHolder.mIsDone.setOnCheckedChangeListener(null);
+
+        if (currentTask.getStatus()) {
+            tasksViewHolder.mIsDone.setChecked(true);
+//            tasksViewHolder.mIsDone.setEnabled(false);
+        } else {
+            tasksViewHolder.mIsDone.setChecked(false);
+        }
+        tasksViewHolder.mIsDone.setTag(currentTask.get_id());
+
+        tasksViewHolder.mIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                mIDataOperations.update(currentTask.get_id(), !currentTask.getStatus());
+                mTaskList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mTaskList.size());
+//                notifyDataSetChanged(); // get error all the time
+            }
+        });
+
     }
 
     @Override
@@ -233,7 +239,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public static class TasksViewHolder extends RecyclerView.ViewHolder {
-
 
         private LinearLayout mLinearLayout_task;
         private CheckBox mIsDone;
@@ -253,4 +258,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mLblDueDate = itemView.findViewById(R.id.lblDueDate);
         }
     }
+
 }

@@ -17,6 +17,7 @@ import com.giselletavares.c0744277_finalproject.activities.LoginActivity;
 import com.giselletavares.c0744277_finalproject.adapters.RecyclerViewAdapter;
 import com.giselletavares.c0744277_finalproject.models.AppDatabase;
 import com.giselletavares.c0744277_finalproject.models.Task;
+import com.giselletavares.c0744277_finalproject.utils.IDataOperations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -27,13 +28,15 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NextDaysFragment extends Fragment {
+public class NextDaysFragment extends Fragment implements IDataOperations {
 
     public static AppDatabase sAppDatabase;
     private FirebaseAuth mAuth;
 
     private RecyclerView mRecyclerView;
     private List<Task> mTaskList;
+    private IDataOperations mIDataOperations;
+    RecyclerViewAdapter recyclerViewAdapter;
 
 
     View mView;
@@ -47,10 +50,13 @@ public class NextDaysFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mIDataOperations = this;
+
         mView = inflater.inflate(R.layout.fragment_next_days, container, false);
 
         mRecyclerView = mView.findViewById(R.id.rvTaskNextDays);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mTaskList, getContext());
+        recyclerViewAdapter = new RecyclerViewAdapter(mIDataOperations, mTaskList, getContext());
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(recyclerViewAdapter);
@@ -92,4 +98,8 @@ public class NextDaysFragment extends Fragment {
 
     }
 
+    @Override
+    public void update(String taskId, Boolean isDone) {
+        NextDaysFragment.sAppDatabase.mTaskDAO().updateTaskStatus(taskId, isDone);
+    }
 }
