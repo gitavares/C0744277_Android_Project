@@ -48,12 +48,16 @@ public interface TaskDAO {
             "ORDER BY modifiedDate DESC")
     List<Task> getTasksDone(String userId, Boolean isDone);
 
-    @Query("UPDATE tasks set " +
-            " status = :isDone " +
+    @Query("SELECT * " +
+            "FROM tasks " +
             "WHERE _id = :taskId ")
-    void updateTaskStatus(String taskId, Boolean isDone);
+    Task getTaskById(String taskId);
 
-
+    @Query("UPDATE tasks set " +
+            " status = :isDone, " +
+            " modifiedDate = :today " +
+            "WHERE _id = :taskId ")
+    void updateTaskStatus(String taskId, Boolean isDone, Date today);
 
     @Update
     void updateTask(Task task);

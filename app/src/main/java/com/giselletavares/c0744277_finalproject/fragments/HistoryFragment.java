@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -89,6 +90,7 @@ public class HistoryFragment extends Fragment implements IDataOperations {
 
     @Override
     public void update(String taskId, Boolean isDone) {
-        HistoryFragment.sAppDatabase.mTaskDAO().updateTaskStatus(taskId, isDone);
+        Calendar today = Calendar.getInstance();
+        HistoryFragment.sAppDatabase.mTaskDAO().updateTaskStatus(taskId, isDone, today.getTime());
     }
 }

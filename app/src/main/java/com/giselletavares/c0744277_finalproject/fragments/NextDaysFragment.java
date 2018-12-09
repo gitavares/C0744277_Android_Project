@@ -100,6 +100,7 @@ public class NextDaysFragment extends Fragment implements IDataOperations {
 
     @Override
     public void update(String taskId, Boolean isDone) {
-        NextDaysFragment.sAppDatabase.mTaskDAO().updateTaskStatus(taskId, isDone);
+        Calendar today = Calendar.getInstance();
+        NextDaysFragment.sAppDatabase.mTaskDAO().updateTaskStatus(taskId, isDone, today.getTime());
     }
 }

@@ -1,21 +1,20 @@
 package com.giselletavares.c0744277_finalproject.adapters;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.giselletavares.c0744277_finalproject.R;
+import com.giselletavares.c0744277_finalproject.activities.EditTaskActivity;
 import com.giselletavares.c0744277_finalproject.models.Task;
 import com.giselletavares.c0744277_finalproject.utils.Formatting;
 import com.giselletavares.c0744277_finalproject.utils.IDataOperations;
@@ -27,7 +26,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<Task> mTaskList;
     private Context mContext;
-    private Dialog mDialog;
     Formatting formatting = new Formatting();
     private IDataOperations mIDataOperations;
 
@@ -45,108 +43,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mView = LayoutInflater.from(mContext).inflate(R.layout.item_task_list, viewGroup, false);
         final TasksViewHolder tasksViewHolder = new TasksViewHolder(mView);
 
-        mDialog = new Dialog(mContext);
-        mDialog.setContentView(R.layout.dialog_task_detail);
-
         tasksViewHolder.mLinearLayout_task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                TextView lblPriority = mDialog.findViewById(R.id.lblPriority_dialog);
-                TextView lblTask = mDialog.findViewById(R.id.lblTask_dialog);
-                TextView lblDuration = mDialog.findViewById(R.id.lblDuration_dialog);
-                TextView lblDueDate = mDialog.findViewById(R.id.lblDueDate_dialog);
-                TextView lblNotesTitle = mDialog.findViewById(R.id.lblNotesTitleField_dialog);
-                TextView lblNotes = mDialog.findViewById(R.id.lblNotes_dialog);
-                Button btnEditTask = mDialog.findViewById(R.id.btnEditTask_dialog);
-                ImageButton btnDeleteTask = mDialog.findViewById(R.id.btnDeleteTask_dialog);
+                Intent intent = new Intent(mContext, EditTaskActivity.class);
+                intent.putExtra("taskId", mTaskList.get(tasksViewHolder.getAdapterPosition()).get_id());
+                mContext.startActivity(intent);
 
-                switch (mTaskList.get(tasksViewHolder.getAdapterPosition()).getPriority()) {
-                    case '0':
-                        lblPriority.setText("");
-                        lblPriority.setVisibility(View.GONE);
-                        break;
-                    case '1':
-                        lblPriority.setVisibility(View.VISIBLE);
-                        lblPriority.setText("!");
-                        lblPriority.setTextColor(Color.parseColor("#303f9f"));
-                        lblPriority.setBackgroundColor(Color.parseColor("#ffefd6"));
-                        break;
-                    case '2':
-                        lblPriority.setVisibility(View.VISIBLE);
-                        lblPriority.setText("!!");
-                        lblPriority.setTextColor(Color.parseColor("#303f9f"));
-                        lblPriority.setBackgroundColor(Color.parseColor("#ffd494"));
-                        break;
-                    case '3':
-                        lblPriority.setVisibility(View.VISIBLE);
-                        lblPriority.setText("!!!");
-                        lblPriority.setTextColor(Color.parseColor("#303f9f"));
-                        lblPriority.setBackgroundColor(Color.parseColor("#ff9800"));
-                        break;
-                }
-
-                lblTask.setText(mTaskList.get(tasksViewHolder.getAdapterPosition()).getTaskName());
-
-                if (mTaskList.get(tasksViewHolder.getAdapterPosition()).getDuration() != null) {
-                    lblDuration.setVisibility(View.VISIBLE);
-                    lblDuration.setText("Duration: " + formatting.getDurationFormatter(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDuration()));
-                } else {
-                    lblDuration.setText("");
-                    lblDuration.setVisibility(View.GONE);
-                }
-
-                Calendar today = Calendar.getInstance();
-                today.set(Calendar.HOUR_OF_DAY, 0);
-                today.set(Calendar.MINUTE, 0);
-                today.set(Calendar.SECOND, 0);
-                today.set(Calendar.MILLISECOND, 0);
-
-                if (mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate() != null) {
-                    lblDueDate.setVisibility(View.VISIBLE);
-                    lblDueDate.setText("Due Date: " + formatting.getDateShortFormatter(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate()));
-                    lblDueDate.setTextColor(Color.parseColor("#212121"));
-                    lblDueDate.setBackgroundColor(Color.TRANSPARENT);
-                    if(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate().compareTo(today.getTime()) < 0){
-                        lblDueDate.setTextColor(Color.RED);
-                        lblDueDate.setBackgroundColor(Color.TRANSPARENT);
-                    } else if(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate().compareTo(today.getTime()) == 0) {
-                        lblDueDate.setText("Due Date: It's Today! " + formatting.getDateShortFormatter(mTaskList.get(tasksViewHolder.getAdapterPosition()).getDueDate()));
-                        lblDueDate.setTextColor(Color.parseColor("#FFFFFF"));
-                        lblDueDate.setBackgroundColor(Color.parseColor("#3f51b5"));
-                    }
-                } else {
-                    lblDueDate.setText("");
-                    lblDueDate.setVisibility(View.GONE);
-                }
-
-                if(mTaskList.get(tasksViewHolder.getAdapterPosition()).getNotes() != null) {
-                    lblNotes.setVisibility(View.VISIBLE);
-                    lblNotesTitle.setVisibility(View.VISIBLE);
-                    lblNotesTitle.setText("Notes: ");
-                    lblNotes.setText(mTaskList.get(tasksViewHolder.getAdapterPosition()).getNotes());
-                } else {
-                    lblNotes.setText("");
-                    lblNotes.setVisibility(View.GONE);
-                    lblNotesTitle.setText("");
-                    lblNotesTitle.setVisibility(View.GONE);
-                }
-
-                btnEditTask.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // go to edit activity
-                    }
-                });
-
-                btnDeleteTask.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-
-                mDialog.show();
             }
         });
 

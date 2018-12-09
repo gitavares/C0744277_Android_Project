@@ -195,6 +195,7 @@ public class AddTaskActivity extends AppCompatActivity {
         }
     }
 
+    // refactor
     private Boolean fieldsValidation(String taskName, String duration) {
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddTaskActivity.this);
