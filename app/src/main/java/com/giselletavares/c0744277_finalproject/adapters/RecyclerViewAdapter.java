@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -113,12 +114,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tasksViewHolder.mLblDueDate.setVisibility(View.GONE);
         }
 
+        if(currentTask.getReminder() != null) {
+            tasksViewHolder.mImgReminder.setVisibility(View.VISIBLE);
+        } else {
+            tasksViewHolder.mImgReminder.setVisibility(View.GONE);
+        }
+
         //Set it to null to erase an existing listener from a recycled view.
         tasksViewHolder.mIsDone.setOnCheckedChangeListener(null);
 
         if (currentTask.getStatus()) {
             tasksViewHolder.mIsDone.setChecked(true);
-//            tasksViewHolder.mIsDone.setEnabled(false);
         } else {
             tasksViewHolder.mIsDone.setChecked(false);
         }
@@ -131,7 +137,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 mTaskList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mTaskList.size());
-//                notifyDataSetChanged(); // get error all the time
             }
         });
 
@@ -150,6 +155,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView mLblTask;
         private TextView mLblDuration;
         private TextView mLblDueDate;
+        private ImageView mImgReminder;
 
         public TasksViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -160,6 +166,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mLblTask = itemView.findViewById(R.id.lblTask);
             mLblDuration = itemView.findViewById(R.id.lblDuration);
             mLblDueDate = itemView.findViewById(R.id.lblDueDate);
+            mImgReminder = itemView.findViewById(R.id.imgReminder);
         }
     }
 
