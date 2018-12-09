@@ -98,7 +98,8 @@ public class HomeActivity extends AppCompatActivity implements TabLayout.BaseOnT
                 finish();
                 break;
             case R.id.mnSettings:
-                // do something
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                finish();
                 break;
             case R.id.mnLogout:
                 FirebaseAuth.getInstance().signOut();

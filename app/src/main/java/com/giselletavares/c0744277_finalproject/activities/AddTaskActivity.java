@@ -57,7 +57,6 @@ public class AddTaskActivity extends AppCompatActivity {
     @BindView(R.id.swReminder)
     Switch swReminder;
 
-
     private DatePickerDialog mDatePickerDialog;
 
     private int mYear;
