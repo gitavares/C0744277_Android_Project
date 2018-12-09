@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -161,8 +160,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.btnDeleteTask:
-//                Task taskToDelete = new Task();
-//                task.set_id(getIntent().getStringExtra("taskId"));
                 task.set_id(task.get_id());
                 EditTaskActivity.sAppDatabase.mTaskDAO().deleteTask(task);
 
@@ -185,6 +182,7 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                         lblDueDateSelected.setText(day + "/" + (month + 1) + "/" + year);
                     }
                 }, mYear, mMonth, mDayOfMonth);
+
                 mDatePickerDialog.getDatePicker().setMinDate(mCalendar.getTimeInMillis());
                 mDatePickerDialog.show();
                 break;
@@ -197,8 +195,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
                     Date currentDateTime = new Date();
 
-//                    final Task task = new Task();
-//                    task.set_id(getIntent().getStringExtra("taskId"));
                     task.set_id(task.get_id());
                     task.setUserId(mAuth.getCurrentUser().getUid());
                     task.setTaskName(txtTaskName.getText().toString());
@@ -215,20 +211,11 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                         task.setDueDate(dueDate);
                     }
 
-                    // only set a reminder if checked, if DueDate is not empty
-                    swReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
-                            if(!lblDueDateSelected.getText().toString().isEmpty() && isChecked) {
-                                Log.d("===== finalDueDate: ", task.getDueDate().toString());
-                                task.setReminder(task.getDueDate());
-                            } else {
-                                Log.d("===== Not saving: ", task.getDueDate().toString());
-                                task.setReminder(null);
-                            }
-                        }
-                    });
+                    if(!lblDueDateSelected.getText().toString().isEmpty() && swReminder.isChecked()) {
+                        task.setReminder(task.getDueDate());
+                    } else {
+                        task.setReminder(null);
+                    }
 
                     if (!txtDuration.getText().toString().isEmpty() && !txtDuration.getText().toString().equals("00:00")) {
                         Date duration = currentDateTime;

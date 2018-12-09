@@ -9,7 +9,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -66,6 +65,8 @@ public class AddTaskActivity extends AppCompatActivity {
     private int mDayOfMonth;
     private Calendar mCalendar;
 
+    Task task;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,8 @@ public class AddTaskActivity extends AppCompatActivity {
                 .allowMainThreadQueries() // it will allow the database works on the main thread
                 .fallbackToDestructiveMigration() // because I won't implement migrations now
                 .build();
+
+        task = new Task();
 
     }
 
@@ -109,6 +112,7 @@ public class AddTaskActivity extends AppCompatActivity {
                         lblDueDateSelected.setText(day + "/" + (month + 1) + "/" + year);
                     }
                 }, mYear, mMonth, mDayOfMonth);
+
                 mDatePickerDialog.getDatePicker().setMinDate(mCalendar.getTimeInMillis());
                 mDatePickerDialog.show();
                 break;
@@ -121,8 +125,6 @@ public class AddTaskActivity extends AppCompatActivity {
                     Formatting formatting = new Formatting();
                     Date currentDateTime = new Date();
 
-
-                    final Task task = new Task();
                     task.set_id(formatting.getDateTimeForIdFormatter(currentDateTime));
                     task.setUserId(mAuth.getCurrentUser().getUid());
                     task.setTaskName(txtTaskName.getText().toString());
@@ -137,15 +139,10 @@ public class AddTaskActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         task.setDueDate(dueDate);
+                    }
 
-                        // only set a reminder if checked, if DueDate is not empty
-                        final Date finalDueDate = dueDate;
-                        swReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                                task.setReminder(finalDueDate);
-                            }
-                        });
+                    if(!lblDueDateSelected.getText().toString().isEmpty() && swReminder.isChecked()) {
+                        task.setReminder(task.getDueDate());
                     }
 
                     if(!txtDuration.getText().toString().isEmpty() && !txtDuration.getText().toString().equals("00:00")){
