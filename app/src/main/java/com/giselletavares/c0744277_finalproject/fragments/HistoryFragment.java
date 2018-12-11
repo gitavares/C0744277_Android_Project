@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.giselletavares.c0744277_finalproject.R;
 import com.giselletavares.c0744277_finalproject.activities.LoginActivity;
@@ -37,6 +38,8 @@ public class HistoryFragment extends Fragment implements IDataOperations {
     private List<Task> mTaskList;
     private IDataOperations mIDataOperations;
     RecyclerViewAdapter recyclerViewAdapter;
+
+    List<Task> tasks;
 
     View mView;
 
@@ -78,7 +81,7 @@ public class HistoryFragment extends Fragment implements IDataOperations {
                 .fallbackToDestructiveMigration() // because i wont implement now migrations
                 .build();
 
-        List<Task> tasks = HistoryFragment.sAppDatabase.mTaskDAO().getTasksDone(currentUser.getUid(), true);
+        tasks = HistoryFragment.sAppDatabase.mTaskDAO().getTasksDone(currentUser.getUid(), true);
 
         mTaskList = new ArrayList<>();
 
@@ -89,8 +92,41 @@ public class HistoryFragment extends Fragment implements IDataOperations {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        tasks = HistoryFragment.sAppDatabase.mTaskDAO().getTasksDone(mAuth.getCurrentUser().getUid(), true);
+
+        mTaskList = new ArrayList<>();
+
+        for(Task task : tasks){
+            mTaskList.add(task);
+        }
+
+        Toast.makeText(getContext(), "Done Tab", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void update(String taskId, Boolean isDone) {
         Calendar today = Calendar.getInstance();
         HistoryFragment.sAppDatabase.mTaskDAO().updateTaskStatus(taskId, isDone, today.getTime());
     }
+
+//    private void loadData(){
+//
+//
+//        // DATABASE
+//        sAppDatabase = Room.databaseBuilder(getContext(), AppDatabase.class, "idoitdb")
+//                .allowMainThreadQueries() // it will allow the database works on the main thread
+//                .fallbackToDestructiveMigration() // because i wont implement now migrations
+//                .build();
+//
+//        List<Task> tasks = HistoryFragment.sAppDatabase.mTaskDAO().getTasksDone(currentUser.getUid(), true);
+//
+//        mTaskList = new ArrayList<>();
+//
+//        for(Task task : tasks){
+//            mTaskList.add(task);
+//        }
+//    }
 }

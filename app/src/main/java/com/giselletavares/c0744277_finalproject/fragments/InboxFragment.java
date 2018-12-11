@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.giselletavares.c0744277_finalproject.R;
 import com.giselletavares.c0744277_finalproject.activities.LoginActivity;
@@ -35,6 +36,7 @@ public class InboxFragment extends Fragment implements IDataOperations {
 
     private RecyclerView mRecyclerView;
     private List<Task> mTaskList;
+    private List<Task> tasks;
     private IDataOperations mIDataOperations;
     RecyclerViewAdapter recyclerViewAdapter;
 
@@ -78,7 +80,7 @@ public class InboxFragment extends Fragment implements IDataOperations {
                 .fallbackToDestructiveMigration() // because i wont implement now migrations
                 .build();
 
-        List<Task> tasks = InboxFragment.sAppDatabase.mTaskDAO().getTasksInbox(currentUser.getUid(), false);
+        tasks = InboxFragment.sAppDatabase.mTaskDAO().getTasksInbox(currentUser.getUid(), false);
 
         mTaskList = new ArrayList<>();
 
@@ -86,6 +88,21 @@ public class InboxFragment extends Fragment implements IDataOperations {
             mTaskList.add(task);
         }
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        tasks = InboxFragment.sAppDatabase.mTaskDAO().getTasksInbox(mAuth.getCurrentUser().getUid(), false);
+
+        mTaskList = new ArrayList<>();
+
+        for(Task task : tasks){
+            mTaskList.add(task);
+        }
+
+        Toast.makeText(getContext(), "Inbox Tab", Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -96,6 +96,11 @@ public class TodayFragment extends Fragment implements IDataOperations {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void update(String taskId, Boolean isDone) {
         Calendar today = Calendar.getInstance();
         TodayFragment.sAppDatabase.mTaskDAO().updateTaskStatus(taskId, isDone, today.getTime());

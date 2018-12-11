@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -248,16 +247,22 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                         task.setNotes(txtNotes.getText().toString());
                     }
 
-                    chkIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                            if(isChecked) {
-                                task.setStatus(true);
-                            } else {
-                                task.setStatus(false);
-                            }
-                        }
-                    });
+                    if(chkIsDone.isChecked()) {
+                        task.setStatus(true);
+                    } else {
+                        task.setStatus(false);
+                    }
+
+//                    chkIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                        @Override
+//                        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                        if(isChecked) {
+//                            task.setStatus(true);
+//                        } else {
+//                            task.setStatus(false);
+//                        }
+//                        }
+//                    });
 
                     task.setCreatedDate(task.getCreatedDate());
                     task.setModifiedDate(currentDateTime);
