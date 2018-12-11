@@ -1,6 +1,7 @@
 package com.giselletavares.c0744277_finalproject.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText mEmail;
     private EditText mPassword;
 
+    private SharedPreferences mSharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnRegister.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
-
     }
 
     @Override
@@ -56,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void signIn(String email, String password){
+    private void signIn(final String email, final String password){
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
 
@@ -70,10 +72,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+                                SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+                                mEditor.putString("userEmail", email);
+                                mEditor.putString("userPassword", password);
+                                mEditor.apply();
+
+
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             } else {
-                                // sign in fail
                                 Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_LONG).show();
                             }
                         }
