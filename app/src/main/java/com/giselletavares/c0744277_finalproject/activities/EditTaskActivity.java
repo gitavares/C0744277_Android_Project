@@ -1,9 +1,12 @@
 package com.giselletavares.c0744277_finalproject.activities;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +26,7 @@ import com.giselletavares.c0744277_finalproject.R;
 import com.giselletavares.c0744277_finalproject.models.AppDatabase;
 import com.giselletavares.c0744277_finalproject.models.Task;
 import com.giselletavares.c0744277_finalproject.utils.Formatting;
+import com.giselletavares.c0744277_finalproject.utils.NotificationByApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -211,6 +215,7 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                     }
 
                     if(!lblDueDateSelected.getText().toString().isEmpty() && swReminder.isChecked()) {
+                        setReminder(task.getDueDate());
                         task.setReminder(task.getDueDate());
                     } else {
                         task.setReminder(null);
@@ -253,17 +258,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                         task.setStatus(false);
                     }
 
-//                    chkIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                        @Override
-//                        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                        if(isChecked) {
-//                            task.setStatus(true);
-//                        } else {
-//                            task.setStatus(false);
-//                        }
-//                        }
-//                    });
-
                     task.setCreatedDate(task.getCreatedDate());
                     task.setModifiedDate(currentDateTime);
 
@@ -303,5 +297,32 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         mDialogLabels.show();
 
         return false;
+    }
+
+    public void setReminder(Date taskDueDate) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(taskDueDate);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.AM_PM, Calendar.AM);
+
+        long futureInMillis = calendar.getTimeInMillis() + 1000 * 60; //Wake up the device to fire a one-time (non-repeating) alarm in one minute
+
+        Intent intent = new Intent(EditTaskActivity.this, NotificationByApp.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
+        }
+
     }
 }
