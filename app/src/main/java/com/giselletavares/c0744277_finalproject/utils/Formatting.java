@@ -10,6 +10,7 @@ public class Formatting {
     Locale locale = new Locale("en", "CA");
     NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
     SimpleDateFormat dateTimeForIdFormatter = new SimpleDateFormat("yyyyMMddHHmmss");
+    SimpleDateFormat dateTimeForNotificationIdFormatter = new SimpleDateFormat("MMddHHmm");
     SimpleDateFormat dateShortFormatter = new SimpleDateFormat("dd/MM");
     SimpleDateFormat dateMediumFormatter = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat dateDescriptiveShortFormatter = new SimpleDateFormat("MMM dd, yy");
@@ -25,6 +26,10 @@ public class Formatting {
 
     public String getDateTimeForIdFormatter(Date value) {
         return dateTimeForIdFormatter.format(value);
+    }
+
+    public String getDateTimeForNotificationIdFormatter(Date value) {
+        return dateTimeForNotificationIdFormatter.format(value);
     }
 
     public String getDateShortFormatter(Date value) {

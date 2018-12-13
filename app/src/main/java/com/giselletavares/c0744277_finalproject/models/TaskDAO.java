@@ -59,6 +59,15 @@ public interface TaskDAO {
             "WHERE _id = :taskId ")
     void updateTaskStatus(String taskId, Boolean isDone, Date today);
 
+    @Query("SELECT * " +
+            "FROM tasks " +
+            "WHERE userId = :userId " +
+            "AND status = :isDone " +
+            "AND dueDate = :today " +
+            "AND reminder = :today " +
+            "ORDER BY priority DESC")
+    List<Task> getTasksReminderForToday(String userId, Boolean isDone, Date today);
+
     @Update
     void updateTask(Task task);
 

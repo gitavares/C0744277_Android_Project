@@ -55,7 +55,6 @@ public class HomeActivity extends AppCompatActivity implements TabLayout.BaseOnT
         mToolbar = findViewById(R.id.tlbHome);
         setSupportActionBar(mToolbar);
 
-
         // TAB LAYOUT
         mTabLayout = findViewById(R.id.tabLayout);
         mTabItemToday = findViewById(R.id.tabItemToday);
@@ -64,12 +63,12 @@ public class HomeActivity extends AppCompatActivity implements TabLayout.BaseOnT
         mTabItemHistory = findViewById(R.id.tabItemHistory);
         mViewPager = findViewById(R.id.vwPager);
 
-
         // LOAD TAB LAYOUT
         mPageAdapter = new PageAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.addOnTabSelectedListener(this);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+
 
     }
 
@@ -98,7 +97,7 @@ public class HomeActivity extends AppCompatActivity implements TabLayout.BaseOnT
                 finish();
                 break;
             case R.id.mnSettings:
-                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                startActivity(new Intent(HomeActivity.this, SettingsAppActivity.class));
                 finish();
                 break;
             case R.id.mnLogout:

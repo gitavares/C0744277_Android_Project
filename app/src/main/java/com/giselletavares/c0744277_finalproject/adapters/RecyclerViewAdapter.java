@@ -102,6 +102,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         if (currentTask.getDueDate() != null) {
             tasksViewHolder.mLblDueDate.setText(formatting.getDateShortFormatter(currentTask.getDueDate()));
+            tasksViewHolder.mLblDueDate.setTextColor(Color.parseColor("#212121"));
+            tasksViewHolder.mLblDueDate.setVisibility(View.VISIBLE);
             if(currentTask.getDueDate().compareTo(today.getTime()) < 0){
                 tasksViewHolder.mLblDueDate.setTextColor(Color.RED);
             } else if(currentTask.getDueDate().compareTo(today.getTime()) == 0) {

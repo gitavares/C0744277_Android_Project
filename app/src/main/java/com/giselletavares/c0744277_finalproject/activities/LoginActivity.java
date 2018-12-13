@@ -72,13 +72,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
-                                SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-                                mEditor.putString("userEmail", email);
-                                mEditor.putString("userPassword", password);
-                                mEditor.apply();
-
-
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             } else {

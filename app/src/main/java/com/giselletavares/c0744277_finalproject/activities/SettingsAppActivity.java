@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsAppActivity extends AppCompatActivity {
 
     public static AppDatabase sAppDatabase;
     @BindView(R.id.btnBack)
@@ -45,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
-            startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
+            startActivity(new Intent(SettingsAppActivity.this, LoginActivity.class));
         }
 
         // DATABASE
@@ -58,15 +58,31 @@ public class SettingsActivity extends AppCompatActivity {
 
         swNotifyByApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked) {
+                    Intent i = new Intent(android.content.Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Notification by App");
+                    i.putExtra(android.content.Intent.EXTRA_TEXT, true);
+                    startActivity(Intent.createChooser(i, "NotificationByApp"));
+                } else {
+                    // look for delete this
+                }
             }
         });
 
         swNotifyByEmail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked) {
+                    Intent i = new Intent(android.content.Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Notification by Email");
+                    i.putExtra(android.content.Intent.EXTRA_TEXT, true);
+                    startActivity(Intent.createChooser(i, "NotificationByEmail"));
+                } else {
+                    // look for delete this
+                }
             }
         });
 
@@ -76,12 +92,12 @@ public class SettingsActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnBack:
-                startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
+                startActivity(new Intent(SettingsAppActivity.this, HomeActivity.class));
                 finish();
                 break;
 
             case R.id.btnChangePassword:
-                startActivity(new Intent(SettingsActivity.this, ChangePasswordActivity.class));
+                startActivity(new Intent(SettingsAppActivity.this, ChangePasswordActivity.class));
                 finish();
                 break;
         }

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.giselletavares.c0744277_finalproject">
+    package="com.giselletavares.c0744277_finalproject"
+    >
+
+    <!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -8,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
@@ -37,11 +42,14 @@
             android:name=".activities.EditTaskActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".activities.SettingsAppActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ChangePasswordActivity"
             android:screenOrientation="portrait" />
+        <receiver
+            android:name=".utils.NotificationByApp"/>
+
     </application>
 
 </manifest>

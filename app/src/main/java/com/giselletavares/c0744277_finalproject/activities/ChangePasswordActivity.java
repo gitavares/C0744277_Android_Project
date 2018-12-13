@@ -84,7 +84,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(task.isSuccessful()){
                                                     Toast.makeText(ChangePasswordActivity.this, "Password Successfully changed", Toast.LENGTH_LONG).show();
-                                                    startActivity(new Intent(ChangePasswordActivity.this, SettingsActivity.class));
+                                                    startActivity(new Intent(ChangePasswordActivity.this, SettingsAppActivity.class));
                                                     finish();
                                                 } else {
                                                     mBuilder.setMessage("Password does not changed");
