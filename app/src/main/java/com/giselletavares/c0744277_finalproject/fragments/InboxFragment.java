@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.giselletavares.c0744277_finalproject.R;
 import com.giselletavares.c0744277_finalproject.activities.LoginActivity;
@@ -90,9 +89,10 @@ public class InboxFragment extends Fragment implements IDataOperations {
 
     }
 
+
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
 
         tasks = InboxFragment.sAppDatabase.mTaskDAO().getTasksInbox(mAuth.getCurrentUser().getUid(), false);
 
@@ -102,7 +102,6 @@ public class InboxFragment extends Fragment implements IDataOperations {
             mTaskList.add(task);
         }
 
-        Toast.makeText(getContext(), "Inbox Tab", Toast.LENGTH_LONG).show();
     }
 
     @Override

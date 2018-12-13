@@ -35,6 +35,7 @@ public class NextDaysFragment extends Fragment implements IDataOperations {
 
     private RecyclerView mRecyclerView;
     private List<Task> mTaskList;
+    private List<Task> tasks;
     private IDataOperations mIDataOperations;
     RecyclerViewAdapter recyclerViewAdapter;
 
@@ -82,13 +83,12 @@ public class NextDaysFragment extends Fragment implements IDataOperations {
                 .build();
 
         Calendar fromTomorrow = Calendar.getInstance();
-//        fromTomorrow.add(Calendar.DAY_OF_YEAR, 1);
         fromTomorrow.set(Calendar.HOUR_OF_DAY, 1); // it is because the due date saved has 00:00:00
         fromTomorrow.set(Calendar.MINUTE, 0);
         fromTomorrow.set(Calendar.SECOND, 0);
         fromTomorrow.set(Calendar.MILLISECOND, 0);
 
-        List<Task> tasks = NextDaysFragment.sAppDatabase.mTaskDAO().getTasksNextDays(currentUser.getUid(), false, fromTomorrow.getTime());
+        tasks = NextDaysFragment.sAppDatabase.mTaskDAO().getTasksNextDays(currentUser.getUid(), false, fromTomorrow.getTime());
 
         mTaskList = new ArrayList<>();
 
@@ -99,8 +99,22 @@ public class NextDaysFragment extends Fragment implements IDataOperations {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+
+        Calendar fromTomorrow = Calendar.getInstance();
+        fromTomorrow.set(Calendar.HOUR_OF_DAY, 1); // it is because the due date saved has 00:00:00
+        fromTomorrow.set(Calendar.MINUTE, 0);
+        fromTomorrow.set(Calendar.SECOND, 0);
+        fromTomorrow.set(Calendar.MILLISECOND, 0);
+
+        tasks = NextDaysFragment.sAppDatabase.mTaskDAO().getTasksNextDays(mAuth.getCurrentUser().getUid(), false, fromTomorrow.getTime());
+
+        mTaskList = new ArrayList<>();
+
+        for(Task task : tasks){
+            mTaskList.add(task);
+        }
     }
 
     @Override

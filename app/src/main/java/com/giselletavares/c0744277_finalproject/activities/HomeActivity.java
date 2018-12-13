@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -113,6 +114,12 @@ public class HomeActivity extends AppCompatActivity implements TabLayout.BaseOnT
     public void onTabSelected(TabLayout.Tab tab) {
         mViewPager.setCurrentItem(tab.getPosition());
         mTabLayout.setBackgroundColor(ContextCompat.getColor(HomeActivity.this, R.color.colorPrimary));
+
+        Fragment fragment = ((PageAdapter)mViewPager.getAdapter()).getFragment(tab.getPosition());
+
+        if(fragment != null) {
+            fragment.onResume();
+        }
     }
 
     @Override

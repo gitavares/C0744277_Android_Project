@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
 
             // error message
+            // set an alert dialog
             Toast.makeText(LoginActivity.this, "Email/Password cannot be empty", Toast.LENGTH_LONG).show();
 
         } else {

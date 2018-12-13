@@ -35,6 +35,7 @@ public class TodayFragment extends Fragment implements IDataOperations {
 
     private RecyclerView mRecyclerView;
     private List<Task> mTaskList;
+    private List<Task> tasks;
     private IDataOperations mIDataOperations;
     RecyclerViewAdapter recyclerViewAdapter;
 
@@ -86,7 +87,7 @@ public class TodayFragment extends Fragment implements IDataOperations {
         today.set(Calendar.SECOND, 0);
         today.set(Calendar.MILLISECOND, 0);
 
-        List<Task> tasks = TodayFragment.sAppDatabase.mTaskDAO().getTasksToday(currentUser.getUid(), false, today.getTime());
+        tasks = TodayFragment.sAppDatabase.mTaskDAO().getTasksToday(currentUser.getUid(), false, today.getTime());
 
         mTaskList = new ArrayList<>();
 
@@ -96,8 +97,22 @@ public class TodayFragment extends Fragment implements IDataOperations {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+
+        tasks = TodayFragment.sAppDatabase.mTaskDAO().getTasksToday(mAuth.getCurrentUser().getUid(), false, today.getTime());
+
+        mTaskList = new ArrayList<>();
+
+        for(Task task : tasks){
+            mTaskList.add(task);
+        }
     }
 
     @Override

@@ -72,16 +72,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 tasksViewHolder.mLblPriority.setText("!");
                 tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
                 tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ffefd6"));
+                tasksViewHolder.mLblPriority.setVisibility(View.VISIBLE);
                 break;
             case '2':
                 tasksViewHolder.mLblPriority.setText("!!");
                 tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
                 tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ffd494"));
+                tasksViewHolder.mLblPriority.setVisibility(View.VISIBLE);
                 break;
             case '3':
                 tasksViewHolder.mLblPriority.setText("!!!");
                 tasksViewHolder.mLblPriority.setTextColor(Color.parseColor("#303f9f"));
                 tasksViewHolder.mLblPriority.setBackgroundColor(Color.parseColor("#ff9800"));
+                tasksViewHolder.mLblPriority.setVisibility(View.VISIBLE);
                 break;
         }
 
@@ -89,6 +92,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         if (currentTask.getDuration() != null) {
             tasksViewHolder.mLblDuration.setText(formatting.getDurationFormatter(currentTask.getDuration()));
+            tasksViewHolder.mLblDuration.setVisibility(View.VISIBLE);
         } else {
             tasksViewHolder.mLblDuration.setText("");
             tasksViewHolder.mLblDuration.setVisibility(View.GONE);
@@ -104,6 +108,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tasksViewHolder.mLblDueDate.setText(formatting.getDateShortFormatter(currentTask.getDueDate()));
             tasksViewHolder.mLblDueDate.setTextColor(Color.parseColor("#212121"));
             tasksViewHolder.mLblDueDate.setVisibility(View.VISIBLE);
+            tasksViewHolder.mLblDueDate.setBackgroundColor(Color.TRANSPARENT);
             if(currentTask.getDueDate().compareTo(today.getTime()) < 0){
                 tasksViewHolder.mLblDueDate.setTextColor(Color.RED);
             } else if(currentTask.getDueDate().compareTo(today.getTime()) == 0) {

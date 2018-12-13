@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.giselletavares.c0744277_finalproject.R;
@@ -29,10 +27,10 @@ public class SettingsAppActivity extends AppCompatActivity {
     TextView lblEmailUser;
     @BindView(R.id.btnChangePassword)
     Button btnChangePassword;
-    @BindView(R.id.swNotifyByApp)
-    Switch swNotifyByApp;
-    @BindView(R.id.swNotifyByEmail)
-    Switch swNotifyByEmail;
+//    @BindView(R.id.swNotifyByApp)
+//    Switch swNotifyByApp;
+//    @BindView(R.id.swNotifyByEmail)
+//    Switch swNotifyByEmail;
     private FirebaseAuth mAuth;
 
     @Override
@@ -56,35 +54,35 @@ public class SettingsAppActivity extends AppCompatActivity {
 
         lblEmailUser.setText(mAuth.getCurrentUser().getEmail());
 
-        swNotifyByApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked) {
-                    Intent i = new Intent(android.content.Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Notification by App");
-                    i.putExtra(android.content.Intent.EXTRA_TEXT, true);
-                    startActivity(Intent.createChooser(i, "NotificationByApp"));
-                } else {
-                    // look for delete this
-                }
-            }
-        });
+//        swNotifyByApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                if(isChecked) {
+//                    Intent i = new Intent(android.content.Intent.ACTION_SEND);
+//                    i.setType("text/plain");
+//                    i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Notification by App");
+//                    i.putExtra(android.content.Intent.EXTRA_TEXT, true);
+//                    startActivity(Intent.createChooser(i, "NotificationByApp"));
+//                } else {
+//                    // look for delete this
+//                }
+//            }
+//        });
 
-        swNotifyByEmail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked) {
-                    Intent i = new Intent(android.content.Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Notification by Email");
-                    i.putExtra(android.content.Intent.EXTRA_TEXT, true);
-                    startActivity(Intent.createChooser(i, "NotificationByEmail"));
-                } else {
-                    // look for delete this
-                }
-            }
-        });
+//        swNotifyByEmail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                if(isChecked) {
+//                    Intent i = new Intent(android.content.Intent.ACTION_SEND);
+//                    i.setType("text/plain");
+//                    i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Notification by Email");
+//                    i.putExtra(android.content.Intent.EXTRA_TEXT, true);
+//                    startActivity(Intent.createChooser(i, "NotificationByEmail"));
+//                } else {
+//                    // look for delete this
+//                }
+//            }
+//        });
 
     }
 
