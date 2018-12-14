@@ -83,7 +83,7 @@ public class NotificationByApp extends BroadcastReceiver {
         }
 
         Intent resultIntent = new Intent(context, HomeActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, resultIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("Task Reminder")
