@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.giselletavares.c0744277_finalproject.R;
 import com.giselletavares.c0744277_finalproject.activities.HomeActivity;
@@ -79,7 +78,6 @@ public class NotificationByApp extends BroadcastReceiver {
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(mChannel);
             }
-
         }
 
         Intent resultIntent = new Intent(context, HomeActivity.class);
@@ -100,8 +98,6 @@ public class NotificationByApp extends BroadcastReceiver {
         if (notificationManager != null) {
             notificationManager.notify(NOTIFICATION_ID, builder.build());
         }
-
-        Toast.makeText(context, "TASK activated - Hello", Toast.LENGTH_SHORT).show();
 
     }
 
